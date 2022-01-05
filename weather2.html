@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       body, html {
+        height: 100%;
+        margin: 0;
+        }
+
+        #bkgd{
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlt12aV-1ghyr8cJkNnYXQJYzJ0eutL3-woA&usqp=CAU");
+        height: 100%; 
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #search{
+        height: 80px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        border-bottom: 1px solid red;
+        color: whitesmoke;
+        margin-bottom: 0%;
+    }
+
+    #search > input{
+        height: 51px;
+        width: 400px;
+        margin-bottom: 10px;
+        font-size: 20px;
+       
+    }
+    #search > button{
+        height: 56px;
+        margin-left: -4.3%;
+        margin-bottom: 1px;
+        margin-bottom: 10px;
+    }
+
+        .text-center{
+            font-size: 35px;
+            color: black;
+            padding-top: 0.8em;
+            margin-top: 0px;
+        }
+        #runningtext{
+            background-color: transparent;
+            height: 90px;
+            margin-top: 0%;
+            
+        }
+
+        #topmenu{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 4px;
+        }
+        #topmenu > div{
+            /* padding: 10px; */
+            color: rgb(53, 27, 27);
+            width: 300px;
+            margin-right: 18px;
+            height:max-content;
+            width: 300px;
+            margin-bottom: 4px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+        }
+
+        img{
+            float: right;
+        }
+
+        #nextweek{
+            display: flex;
+            flex-wrap: wrap;
+            height: 190px;
+            width: 60%;
+            margin: auto;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 15px;
+           
+        }
+        #nextweek > div {
+            height: 100%;
+            width: 200px;
+            margin-right: 2%;
+            /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset; */
+            padding-left: 3px;
+            margin-bottom: 14px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
+
+        #nextweek img{
+            margin-top: 0px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="bkgd">       
+        <div id="search">                 
+            <input type="text" placeholder="Location for detalis" id="city">
+            <button onclick="getdetalis()">Search</button>
+        </div>
+        <div id="runningtext">
+            <p class="text-center">
+                <marquee scrollamount="10">
+                 <span class="text-stroke">🌘🌦️Get the weather report Not just of today but of the next week as well 🌧️⛈️</span>
+                 <span class="text-white">🌘🌦️जाने ना सिर्फ आज के अपने शहर के मौसम का हाल बल्कि आने आले एक सप्ताह का भी !!🌧️⛈️</span>
+                 <span class="text-stroke">🌘🌦️Get the weather report Not just of today but of the next week as well 🌧️⛈️</span>
+                 <span class="text-white">🌘🌦️जाने ना सिर्फ आज के अपने शहर के मौसम का हाल बल्कि आने आले एक सप्ताह का भी !!🌧️⛈️</span>
+                 <span class="text-stroke">🌘🌦️Get the weather report Not just of today but of the next week as well 🌧️⛈️</span>
+                 <span class="text-white">🌘🌦️जाने ना सिर्फ आज के अपने शहर के मौसम का हाल बल्कि आने आले एक सप्ताह का भी !!🌧️⛈️</span>
+                 <span class="text-stroke">🌘🌦️Get the weather report Not just of today but of the next week as well 🌧️⛈️</span>
+                 <span class="text-white">🌘🌦️जाने ना सिर्फ आज के अपने शहर के मौसम का हाल बल्कि आने आले एक सप्ताह का भी !!🌧️⛈️</span>                
+               </marquee>
+            </p> 
+        </div>
+        <div id="topmenu">
+            <div id="maind"></div>
+            <div id="smalld"></div>
+            <div id="map">
+                <iframe id="googleMap" frameborder="0"></iframe>
+            </div>
+        </div>        
+        <div id="nextweek"></div>
+        <div id="bkgd"></div>          
+    </div>
+</body>
+</html>
+
+<script>
+    let main_div = document.getElementById('nextweek');
+    async function getdetalis(){ 
+        main_div.innerHTML = "";      
+        let map = document.getElementById('map')
+        map.style.height="215px"       
+        let city = document.getElementById('city').value;
+        let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=6&appid=5b2fe86acda81f8761fcf8f70357d4ee&units=metric`
+        let res = await fetch(url)
+        let data = await res.json();
+        let flexData = data.list;
+        flexData.forEach(el => {
+            appendData3(el)
+        });
+        console.log(flexData);
+        getGoogleMap(city)
+        appendData(data)
+        appendData2(data)      
+        console.log(data);
+    }
+
+    function getGoogleMap(city){
+        let getMapData = document.getElementById("googleMap");
+        getMapData.src = `https://maps.google.com/maps?q=${city}&t=&z=13&ie=AIzaSyAWrXe9tnjD0YutIzBzCoyfwO7tRb2s8Lg=&output=embed`;
+        getMapData.width = "100%";
+        getMapData.height = "100%";
+       
+    }
+
+    function appendData(data){
+        let maind = document.getElementById('maind')
+        maind.innerHTML = ""
+        maind.style.padding="10px"
+        let city_name = document.createElement('h1')
+        city_name.innerText = data.city.name;
+        let date = document.createElement('p')
+        // date.innerHTML = data.list[0].dt_txt;
+        let d = new Date();
+        date.innerHTML = d.toDateString();
+        let temp = document.createElement('h2')
+        temp.innerHTML = `${data.list[0].main.temp}°C`
+        maind.append(city_name,date,temp)
+    }
+
+    function appendData2(data){
+        let smalld = document.getElementById('smalld')
+        smalld.innerHTML="";
+        smalld.style.padding="10px"
+        let speed = document.createElement('h3');
+        speed.innerHTML = `Airspeed: ${data.list[0].wind.speed} km/hr`
+        let Dis = document.createElement('h2');
+        Dis.style.color="maroon"
+        Dis.innerHTML = `${data.list[0].weather[0].description}`
+        let img = document.createElement('img')
+        img.style.width = "60%"
+        img.style.height = "80%"
+        img.style.borderRadius= "70%"
+        img.style.background="rgb(243,162,174)"
+        img.src= `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`
+        smalld.append(img,Dis,speed)
+    }
+
+   
+    function appendData3(el) {   
+           
+        let small_div = document.createElement('div');
+        let h3_date = document.createElement('h4')
+        h3_date.innerHTML = el.dt_txt;
+
+        let p_dis = document.createElement('p');
+        p_dis.innerHTML = el.weather[0].description;
+
+        let p_temp = document.createElement('h2');
+        p_temp.innerHTML = `${el.main.temp}°C`;
+
+        let img = document.createElement('img')
+        img.src= `http://openweathermap.org/img/wn/${el.weather[0].icon}@2x.png`
+
+        small_div.append(img,h3_date,p_dis,p_temp);
+        main_div.append(small_div)
+
+
+
+
+    }
+
+</script>
