@@ -7,6 +7,8 @@
   that you search on google map. for that google API is used
 </p>
 # Tech Stack
-<h1>HTML</h1></br></br>
-<h1>CSS</h1></br>
-<h1>JAVASCRIPT</>
+<h3>HTML</h3></br>
+<h3>CSS</h3></br>
+<h3>JAVASCRIPT</h3>
+ 
+ <img src = "https://camo.githubusercontent.com/23d0736e736d7574c4bf5ef9c94a1687210e86f4c64da06f64329538b433bc48/68747470733a2f2f692e6962622e636f2f745a6b6a67354d2f657a6769662d636f6d2d6769662d6d616b65722d312e676966" />
